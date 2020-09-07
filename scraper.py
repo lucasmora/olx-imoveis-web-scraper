@@ -36,6 +36,8 @@ for pagina in range(1, n_paginas + 1):
         quartos = 0
         tamanho = 0
         condominio = 0
+        bairro = ''
+        bairro = i.find('span', 'sc-ifAKCX sc-7l84qu-1 fVmnUX').text
 
         # Encontrando e dividindo as informações sobre condomínio, quartos, tamanho e vagas de garagem
         infos = i.findAll('span', 'sc-ifAKCX sc-1j5op1p-0 fDwtTK')
@@ -64,11 +66,12 @@ for pagina in range(1, n_paginas + 1):
                 condominio = condominio.replace(".", "")  # Removendo o ponto decimal para converter para int
 
         # Adicionando o imóvel recém criado à lista de imóveis
-        imovel = [titulo, preco, condominio, quartos, tamanho, vagas, link]
+        imovel = [titulo, bairro, preco, condominio, quartos, tamanho, vagas, link]
         imoveis.append(imovel)
 
 # Criando DataFrame com os dados de cada registro
-df = pd.DataFrame(columns=['titulo', 'preco', 'condominio', 'quartos', 'tamanho', 'vagas', 'link'], data=imoveis)
+df = pd.DataFrame(columns=['titulo', 'bairro', 'preco', 'condominio', 'quartos', 'tamanho', 'vagas', 'link'],
+                  data=imoveis)
 
 # Formatando os tipos de dados corretos de cada coluna
 df['preco'] = df['preco'].astype('int')

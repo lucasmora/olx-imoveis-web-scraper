@@ -11,6 +11,7 @@ Os dados são exportados para um arquivo .CSV, a fim de facilitar a análise pos
 ## Atributos extraídos
 Os atributos de cada imóvel foram deliberadamente selecionados:
 - Título do anúncio
+- Bairro
 - Preço do aluguel
 - Preço do condomínio, se aplicável
 - Quantidade de quartos
