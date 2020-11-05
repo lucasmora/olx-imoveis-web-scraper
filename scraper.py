@@ -27,7 +27,7 @@ for pagina in range(1, n_paginas + 1):
         titulo = i.find('h2').text  # Título do anúncio
 
         # Extraindo e formatando o preço
-        preco = i.find('span', 'hLiLwY').text
+        preco = i.find('span', 'eoKYee').text
         preco = re.search(padrao, preco).group()
         preco = preco.replace(".", "")
 
@@ -37,13 +37,13 @@ for pagina in range(1, n_paginas + 1):
         tamanho = 0
         condominio = 0
         bairro = ''
-        bairro = i.find('span', 'sc-ifAKCX sc-7l84qu-1 fVmnUX').text
+        bairro = i.find('span', 'dpURtf').text
 
         # Encontrando e dividindo as informações sobre condomínio, quartos, tamanho e vagas de garagem
-        infos = i.findAll('span', 'sc-ifAKCX sc-1j5op1p-0 fDwtTK')
+        infos = i.find('span', 'eLPYJb')
         for info in infos:
-            if '|' in info.text:
-                for t in info.text.split('|'):
+            if '|' in info:
+                for t in info.split('|'):
                     if 'quarto' in t:
                         quartos = re.search(padrao, t).group()
                     elif 'vaga' in t:
@@ -53,14 +53,14 @@ for pagina in range(1, n_paginas + 1):
                     elif 'Condomínio' in t:
                         condominio = re.search(padrao, t).group()
             else:
-                if 'quarto' in t:
-                    quartos = re.search(padrao, t).group()
-                elif 'vaga' in t:
-                    vagas = re.search(padrao, t).group()
-                elif 'm²' in t:
-                    tamanho = re.search(padrao, t).group()
-                elif 'Condomínio' in t:
-                    condominio = re.search(padrao, t).group()
+                if 'quarto' in info:
+                    quartos = re.search(padrao, info).group()
+                elif 'vaga' in info:
+                    vagas = re.search(padrao, info).group()
+                elif 'm²' in info:
+                    tamanho = re.search(padrao, info).group()
+                elif 'Condomínio' in info:
+                    condominio = re.search(padrao, info).group()
 
             if condominio != 0:
                 condominio = condominio.replace(".", "")  # Removendo o ponto decimal para converter para int
@@ -83,6 +83,6 @@ df['vagas'] = df['vagas'].astype('int')
 print("\n{} páginas extraídas. {} registros criados.\n".format(n_paginas, str(df.shape[0])))
 
 # Exportando para CSV
-arquivo = "df.csv"
-df.to_csv(arquivo)
+arquivo = "imoveis.csv"
+df.to_csv(arquivo, encoding="utf-8")
 print("Dados salvos como {}.".format(arquivo))
