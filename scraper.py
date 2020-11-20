@@ -84,5 +84,5 @@ print("\n{} páginas extraídas. {} registros criados.\n".format(n_paginas, str(
 
 # Exportando para CSV
 arquivo = "imoveis.csv"
-df.to_csv(arquivo, encoding="utf-8")
+df.to_csv(arquivo, encoding="utf-8", index=False)
 print("Dados salvos como {}.".format(arquivo))
