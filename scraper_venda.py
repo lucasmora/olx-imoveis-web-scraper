@@ -3,6 +3,10 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import re
 
+def scraper_venda():
+    print("Scraper de venda [NÃO IMPLEMENTADO]")
+
+'''
 # O site da OLX exige que cabeçalhos sejam enviados
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
 
@@ -86,3 +90,4 @@ print("\n{} páginas extraídas. {} registros criados.\n".format(n_paginas, str(
 arquivo = "imoveis.csv"
 df.to_csv(arquivo, encoding="utf-8", index=False)
 print("Dados salvos como {}.".format(arquivo))
+'''

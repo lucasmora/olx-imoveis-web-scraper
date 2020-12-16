@@ -1,7 +1,16 @@
-# Web Scraper - Aluguéis particulares em Curitiba
+# Web Scraper - Aluguéis e vendas particulares em Curitiba
 
-Este web scraper tem como objetivo extrair informações de preço e descrições de imóveis para aluguel do site [OLX](https://www.olx.com.br). A pesquisa foi filtrada para a cidade de Curitiba, PR.
+Este web scraper tem como objetivo extrair informações de preço e descrições de imóveis para aluguel e venda do site [OLX](https://www.olx.com.br). A pesquisa foi filtrada para a cidade de Curitiba, PR.
 Os dados são exportados para um arquivo .CSV, facilitando a análise posterior.
+
+## Como usar
+
+Para extrair todas as informações, rodar sem nenhuma flag.
+
+Para extrair apenas informações de aluguéis, rodar com a flag -a:
+
+Para extrair apenas informações de venda, rodar com a flag -v:
+
 
 ## Bibliotecas e dependências
 
