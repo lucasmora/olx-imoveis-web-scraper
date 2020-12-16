@@ -13,6 +13,8 @@ def scraper_aluguel():
     # As informações de cada imóvel serão armazenadas nesta lista
     imoveis = []
 
+    print("Extraindo dados de aluguéis...")
+
     # Lendo a quantidade de páginas especificadas
     for pagina in range(1, n_paginas + 1):
         print("Extraindo página {}...".format(pagina))
@@ -84,6 +86,6 @@ def scraper_aluguel():
     print("\n{} páginas extraídas. {} registros criados.\n".format(n_paginas, str(df.shape[0])))
 
     # Exportando para CSV
-    arquivo = "imoveis.csv"
+    arquivo = "imoveis_aluguel.csv"
     df.to_csv(arquivo, encoding="utf-8", index=False, sep=';')
     print("Dados salvos como {}.".format(arquivo))
