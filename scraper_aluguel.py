@@ -3,12 +3,12 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import re
 
-def scraper_aluguel():
+def scraper_aluguel(paginas):
     # O site da OLX exige que cabeçalhos sejam enviados
     headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
 
     # Número de páginas a serem lidas
-    n_paginas = 2
+    n_paginas = paginas
 
     # As informações de cada imóvel serão armazenadas nesta lista
     imoveis = []

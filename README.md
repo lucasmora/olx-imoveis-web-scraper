@@ -13,13 +13,16 @@ Para extrair apenas informações de __aluguéis__, executar com a flag `-a`:
 Para extrair apenas informações de __venda__, executar com a flag `-v`:  
 ```python main.py -v```
 
+O número de páginas a serem extraídas pode ser personalizado com a flag `-p` (default = 2). Para extrair 3 páginas:  
+```python main.py -p 3```
+
 
 ## Bibliotecas e dependências
 
 - Python 3
 - RegEx
 - BeautifulSoup 4.9.3 com *requests 2.2* e *lxml*
-- Pandas 1.2
+- Pandas 1.4
 
 ## Atributos extraídos
 
