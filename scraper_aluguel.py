@@ -36,8 +36,7 @@ def scraper_aluguel(paginas):
             quartos = 0
             tamanho = 0
             condominio = 0
-            bairro = ''
-            bairro = i.find('span', 'dpURtf').text
+            bairro = anuncio.find(attrs={"aria-label": True}).text
 
             # Encontrando e dividindo as informações sobre condomínio, quartos, tamanho e vagas de garagem
             infos = i.find('span', 'eLPYJb')
