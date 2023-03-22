@@ -22,17 +22,14 @@ def scraper_aluguel(paginas):
         documento = requests.get(url, headers=headers)
         sopa = BeautifulSoup(documento.content, 'html.parser')
 
-        padrao = "([0-9.]+)"  # Padrão RegEx para extrair números com e sem pontos decimais
+        for anuncio in sopa.find(id='ad-list'):
+            link = anuncio.findAll('a')[0].get_attribute_list('href')[0]  # Link do anúncio
 
-        for i in sopa.find_all('a', {'class': 'fnmrjs-0'}):
-            link = i.parent.findAll('a')[0].get_attribute_list('href')[0]  # Link do anúncio
-
-            titulo = i.find('h2').text  # Título do anúncio
+            titulo = anuncio.find('h2').text  # Título do anúncio
 
             # Extraindo e formatando o preço
-            preco = i.find('span', 'eoKYee').text
-            preco = re.search(padrao, preco).group()
-            preco = preco.replace(".", "")
+            preco = anuncio.find('span', 'main-price').text
+            preco = re.sub(r'[^\d,]', '', preco)
 
             # Inicializando variáveis
             vagas = 0
@@ -89,3 +86,5 @@ def scraper_aluguel(paginas):
     arquivo = "imoveis_aluguel.csv"
     df.to_csv(arquivo, encoding="utf-8", index=False, sep=';')
     print("Dados salvos como {}.".format(arquivo))
+
+scraper_aluguel(2)
