@@ -1,25 +1,46 @@
-import sys
-import argparse
-import scraper_aluguel, scraper_venda
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import re
 
-parser = argparse.ArgumentParser(description='Extrai informações de aluguel e venda do site OLX.com.br.')
-parser.add_argument('-a', action='store_true', help='extrai dados de imóveis para aluguel')
-parser.add_argument('-v', action='store_true', help='extrai dados de imóveis para venda')
-parser.add_argument('-p', action='append', metavar='X', help='extrai X páginas')
+def scraper_aluguel(paginas):
+    # O site da OLX exige que cabeçalhos sejam enviados
+    headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0'}
 
-args = parser.parse_args()
+    # Número de páginas a serem lidas
+    n_paginas = paginas
 
-if args.p is not None:
-    paginas = int(args.p[0])
-else:
-    paginas = 2
+    # As informações de cada imóvel serão armazenadas nesta lista
+    imoveis = []
 
-if args.a == False and args.v == False:
-    scraper_aluguel.scraper_aluguel(paginas)
-    scraper_venda.scraper_venda(paginas)
-else:
-    if args.a == True:
-        scraper_aluguel.scraper_aluguel(paginas)
+    print("Extraindo dados de aluguéis...")
 
-    if args.v == True:
-        scraper_venda.scraper_venda(paginas)
+    # Lendo a quantidade de páginas especificadas
+    for pagina in range(1, n_paginas + 1) :
+        url = 'https://www.olx.com.br/imoveis/aluguel/estado-se/sergipe/aracaju?o=2' + str(pagina) + '&pe=10000&ps=1'
+        documento = requests.get(url, headers=headers)
+        sopa = BeautifulSoup(documento.content, 'html.parser')
+
+        for anuncio in sopa.find(id='ad-list'):
+            try:
+                link = anuncio.findAll('a')[0].get_attribute_list('href')[0]  # Link do anúncio
+
+                titulo = anuncio.find('h2').text  # Título do anúncio
+
+            # Extraindo e formatando o preço
+                preco = anuncio.find('span', 'main-price').text
+                preco = re.sub(r'[^\d,]', '', preco)
+            except:
+                link = 'false'
+                titulo = 'false'
+                preco = 'false'
+            
+            print(link, titulo, preco)
+            imoveis.append([link, titulo, preco])
+            df = pd.DataFrame(columns=['link', 'titulo', 'preco'],
+                    data=imoveis)
+
+            df.to_csv('imoveis_aluguel.csv', index=False)
+            print("\n{} páginas extraídas. {} registros criados.\n".format(n_paginas, str(df.shape[0])))
+
+    
